@@ -35,7 +35,10 @@ def read_parquet_schema_df(path: str, column_name_length: int = 50 ) -> dict:#pd
     schema = schema[["SUID","dict_dtypes","dtype","column"]]
     return zip(schema.column,schema.dtype)#schema#
 
-
+def file_exists(current_file:str , subject_area: str, zone:str , directory:str ) ->bool:
+  listoffiles = [file.name for file in dbutils.fs.ls(f"dbfs:/mnt/adls_dl{zone}_{subject_area}/{directory}")]
+  if current_file in listoffiles: return True
+  else: return false 
 
 def PySparkParquetSchema(Schema):
   struct = []
